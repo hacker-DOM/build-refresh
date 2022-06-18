@@ -1,0 +1,86 @@
+# build-refresh
+:toc: macro
+
+toc::[]
+
+// "normal" substitution group, includes all substitutions, including "q" (inline formatting) that we need here to format the text
+// see https://docs.asciidoctor.org/asciidoc/latest/subs/#normal-group
+:br: pass:n[`build-refresh`]
+:alf: https://www.alfredapp.com/[Alfred]
+
+{br} is an {alf} workflow . 
+
+## Installation 
+. Clone the repository
+. Double-click on `build-refresh.alfredworkflow` and import it into Alfred
+. By default, the workflow uses "Hyper" and "Vivaldi" as the termianl and browser, respectively. If you use different applications, you can change these keywords in the different cells. Each cell has a description that includes info on whether or not it should be changed.
+
+## Dependencies
+Requires the Alfred Powerpack.
+
+## Project setup
+You probably want to have a `build.sh` script. You also want to have a `build-open.sh` which functions as a fallback in case somebody _doesn't_ have {br}.
+
+### build-open.sh
+
+For example, with `asciidoctor-pdf`, your `build-open.sh` could look like this:
+
+[source,bash]
+----
+./build.sh "$@";
+open *.pdf;
+----
+
+or, for `asciidoctor` (with html output), you could use:
+
+[source,bash]
+----
+./build.sh "$@";
+open *.html;
+----
+
+### build-refresh.sh
+Finally, you can add a `build-refresh.sh` that uses this workflow:
+
+[source,bash]
+----
+# This script requires the Alfred workflow `com.alfredapp.hacker-dom.build-refresh`.
+# It can be downloaded from https://github.com/hacker-DOM/build-refresh
+# Alfred is a productivity tool for MacOS.
+# If you don't have Alfred or this workflow you can just use ./build-open.sh
+./build.sh "$@";
+/usr/bin/osascript -e "tell application \"Alfred 4\" to run trigger \"refresh\" in workflow \"com.alfredapp.hacker-dom.build-refesh\"";
+----
+
+## Usage
+There are multiple ways to use the workflow:
+
+. Anywhere in your operating system, launch Alfred (default Cmd+Space), type `build` and execute the `build` trigger of this workflow. The only requirement here is that in your most-recently-used terminal window, the AsciiDoc project is the first tab (more specifically, activatable by Cmd+1).
++
+This trigger will run `./build-refresh.sh` in the first tab of your most-recently-used terminal window.
+. Alternatively, your can use run `build-refresh.sh` directly.
+
+Either way, this will run the trigger `refresh`. This will use Vivaldi's Api to search its tabs and find one matching one of the following two regexs
+
+[.text-center]
+`/^file:\/\/\/Users\/.*\.pdf$/`
+
+[.text-center]
+`/^file:\/\/\/Users\/.*\.html$/`
+
+It will then:
+. activate that tab
+. activate that window
+. raise Vivaldi
+. activate Vivaldi
+. send Cmd+R to refresh the page 🚀
+
+## FAQ
+
+> Can I use a Safari?
+
+Safari has a different Api and is currently _not_ supported
+
+> Something doesn't work!
+
+Submit an issue! I'd like this workflow to work on all Chromium-browsers, terminals, etc.
