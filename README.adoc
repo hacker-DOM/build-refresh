@@ -52,7 +52,7 @@ Finally, you can add a `build-refresh.sh` that uses this workflow:
 # Alfred is a productivity tool for MacOS.
 # If you don't have Alfred or this workflow you can just use ./build-open.sh
 ./build.sh "$@";
-/usr/bin/osascript -e "tell application \"Alfred 4\" to run trigger \"refresh\" in workflow \"com.alfredapp.hacker-dom.build-refesh\"";
+/usr/bin/osascript -e "tell application \"Alfred 4\" to run trigger \"refresh\" in workflow \"com.alfredapp.hacker-dom.build-refresh\"";
 ----
 
 ## Usage
