@@ -81,8 +81,6 @@ It will then:
 ## FAQ
 
 
-abcd.sh
-
 > What's the best way to test, locally, if it is working?
 
 Create an empty directory and add:
