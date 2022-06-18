@@ -39,6 +39,9 @@ or, for `asciidoctor` (with html output), you could use:
 open *.html;
 ----
 
+// It seems that for headings to be referencable, they have to start with a capital letter. Hence we add an `id` manually.
+// Lastly, it seems that it cannot contain a period, so replacing it with an underscore.
+[#build-refresh_sh]
 ### build-refresh.sh
 Finally, you can add a `build-refresh.sh` that uses this workflow:
 
@@ -76,6 +79,25 @@ It will then:
 . send Cmd+R to refresh the page 🚀
 
 ## FAQ
+
+
+abcd.sh
+
+> What's the best way to test, locally, if it is working?
+
+Create an empty directory and add:
+
+. a `a.adoc` file with optional contents,
+. a `build.sh` file with `asciidoctor-pdf "$@" a.adoc`,
+. a `build-refresh.sh` <<build-refresh_sh,as above>>.
+
+{empty}
+
+. Open a new terminal window and try running `build-refresh.sh`.
+. Open a new tab and also a new browser window.
+. Open a different application, run your Aflred shortcut (default: Cmd+Space), type `build`, and if a trigger comes up, press Enter. Hyper should be activated, your project built, Vivaldi activated with the right tab and window and the document refreshed - voilà!
+
+For a different-application setup, change the corresponding parts in the workflow, and then in this setup 🙂
 
 > Can I use a Safari?
 
